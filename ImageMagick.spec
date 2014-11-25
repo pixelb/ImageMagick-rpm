@@ -3,7 +3,7 @@
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		6%{?dist}
+Release:		7%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -319,6 +319,9 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Tue Nov 25 2014 Rex Dieter <rdieter@fedoraproject.org> 6.8.8.10-7
+- rebuild (openexr)
+
 * Tue Aug 26 2014 Jitka Plesnikova <jplesnik@redhat.com> - 6.8.8.10-6
 - Perl 5.20 rebuild
 
