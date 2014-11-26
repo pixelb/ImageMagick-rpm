@@ -3,7 +3,7 @@
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		7%{?dist}
+Release:		8%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -229,7 +229,7 @@ rm PerlMagick/demo/Generic.ttf
 %check
 #export LD_LIBRARY_PATH=%{buildroot}/wand/.libs/:%{buildroot}/Magick++/lib/.libs/
 export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}
-make %{?_smp_mflags} check ||:
+make %{?_smp_mflags} check
 
 %clean
 rm -rf %{buildroot}
@@ -319,6 +319,9 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Wed Nov 26 2014 Rex Dieter <rdieter@fedoraproject.org> 6.8.8.10-8
+- revert workaround
+
 * Tue Nov 25 2014 Rex Dieter <rdieter@fedoraproject.org> 6.8.8.10-7
 - rebuild (openexr)
 - 'make check' non-fatal as temp workaround for FTBFS (#1142784)
