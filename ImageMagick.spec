@@ -1,9 +1,9 @@
-%global VER 6.8.8
-%global Patchlevel 10
+%global VER 6.9.0
+%global Patchlevel 9
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		8%{?dist}
+Release:		1%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -298,7 +298,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %doc Magick++/AUTHORS Magick++/ChangeLog Magick++/NEWS Magick++/README
 %doc www/Magick++/COPYING
-%{_libdir}/libMagick++-6.Q16.so.3*
+%{_libdir}/libMagick++-6.Q16.so.6*
 
 %files c++-devel
 %defattr(-,root,root,-)
@@ -319,10 +319,14 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
-* Wed Nov 26 2014 Rex Dieter <rdieter@fedoraproject.org> 6.8.8.10-8
+* Mon Feb 23 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.0.9-1
+- New version 6.9.0-9 - bz#1087263.
+- So-name bump: libMagick++-6.Q16.so.3 -> libMagick++-6.Q16.so.6 (ML: http://permalink.gmane.org/gmane.linux.redhat.fedora.devel/205719)
+
+* Wed Nov 26 2014 Rex Dieter <rdieter@fedoraproject.org> - 6.8.8.10-8
 - revert workaround
 
-* Tue Nov 25 2014 Rex Dieter <rdieter@fedoraproject.org> 6.8.8.10-7
+* Tue Nov 25 2014 Rex Dieter <rdieter@fedoraproject.org> - 6.8.8.10-7
 - rebuild (openexr)
 - 'make check' non-fatal as temp workaround for FTBFS (#1142784)
 
