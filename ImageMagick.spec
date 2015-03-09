@@ -1,5 +1,5 @@
 %global VER 6.9.0
-%global Patchlevel 9
+%global Patchlevel 10
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
@@ -319,9 +319,12 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Mon Mar 09 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.0.10-1
+- New version 6.9.0-10 - bz#1197400.
+
 * Mon Feb 23 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.0.9-1
 - New version 6.9.0-9 - bz#1087263.
-- So-name bump: libMagick++-6.Q16.so.3 -> libMagick++-6.Q16.so.6 (ML: http://permalink.gmane.org/gmane.linux.redhat.fedora.devel/205719)
+- So-name bump: libMagick++-6.Q16.so.3 -> libMagick++-6.Q16.so.6 (ML: https://lists.fedoraproject.org/pipermail/devel/2015-March/208814.html)
 
 * Wed Nov 26 2014 Rex Dieter <rdieter@fedoraproject.org> - 6.8.8.10-8
 - revert workaround
