@@ -1,5 +1,5 @@
-%global VER 6.9.0
-%global Patchlevel 10
+%global VER 6.9.1
+%global Patchlevel 2
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
@@ -319,6 +319,9 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Mon Apr 20 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.2-1
+- New version 6.9.1-2 - bz#1204371.
+
 * Mon Mar 09 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.0.10-1
 - New version 6.9.0-10 - bz#1197400.
 
