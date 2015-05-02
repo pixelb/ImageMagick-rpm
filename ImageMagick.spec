@@ -3,7 +3,7 @@
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		1%{?dist}
+Release:		2%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -160,6 +160,7 @@ cp -p Magick++/demo/*.cpp Magick++/demo/*.miff Magick++/examples
 	--with-perl-options="INSTALLDIRS=vendor %{?perl_prefix} CC='%__cc -L$PWD/magick/.libs' LDDLFLAGS='-shared -L$PWD/magick/.libs'" \
 	--without-dps \
 	--without-included-ltdl --with-ltdl-include=%{_includedir} \
+	--without-gcc-arch \
 	--with-ltdl-lib=%{_libdir}
 
 # Disable rpath
@@ -319,6 +320,9 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Sat May 02 2015 Kalev Lember <kalevlember@gmail.com> - 6.9.1.2-2
+- Disable gcc arch optimization (#1213828)
+
 * Mon Apr 20 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.2-1
 - New version 6.9.1-2 - bz#1204371.
 
