@@ -1,14 +1,14 @@
 %global VER 6.9.1
-%global Patchlevel 2
+%global Patchlevel 3
 
 Name:		ImageMagick
 Version:	%{VER}.%{Patchlevel}
-Release:	3%{?dist}
+Release:	0.beta.1%{?dist}
 Summary:	An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:	ImageMagick
 Url:		http://www.imagemagick.org/
-Source0:	ftp://ftp.ImageMagick.org/pub/%{name}/%{name}-%{VER}-%{Patchlevel}.tar.xz
+Source0:	ftp://ftp.ImageMagick.org/pub/%{name}/beta/%{name}-%{VER}-%{Patchlevel}.tar.bz2
 
 Requires:	%{name}-libs = %{version}-%{release}
 
@@ -319,8 +319,11 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Thu May 21 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.3-0.beta.1
+- Build beta 6.9.1-3 to gone -march (https://fedorahosted.org/fesco/ticket/1443)
+
 * Sat May 16 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.2-3
-- Enable back gcc arch optimization (drop --without-gcc-arch) #1213828 (#1214344) - GCC updated, problem should be gone.
+- Enable back gcc arch optimization (--without-gcc-arch) #1213828 - GCC updated, problem should be gone.
 
 * Sat May 02 2015 Kalev Lember <kalevlember@gmail.com> - 6.9.1.2-2
 - Disable gcc arch optimization (#1213828)
