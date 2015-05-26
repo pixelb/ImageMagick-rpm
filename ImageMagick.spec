@@ -3,7 +3,7 @@
 
 Name:		ImageMagick
 Version:	%{VER}.%{Patchlevel}
-Release:	0.beta.1%{?dist}
+Release:	0.beta.2%{?dist}
 Summary:	An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:	ImageMagick
@@ -160,6 +160,7 @@ cp -p Magick++/demo/*.cpp Magick++/demo/*.miff Magick++/examples
 	--with-perl-options="INSTALLDIRS=vendor %{?perl_prefix} CC='%__cc -L$PWD/magick/.libs' LDDLFLAGS='-shared -L$PWD/magick/.libs'" \
 	--without-dps \
 	--without-included-ltdl --with-ltdl-include=%{_includedir} \
+	--without-gcc-arch \
 	--with-ltdl-lib=%{_libdir}
 
 # Disable rpath
@@ -319,6 +320,9 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Wed May 27 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.3-0.beta.2
+- Again readd --without-gcc-arch to configure, to gone also -mtune gcc option (https://fedorahosted.org/fesco/ticket/1443)
+
 * Thu May 21 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.3-0.beta.1
 - Build beta 6.9.1-3 to gone -march (https://fedorahosted.org/fesco/ticket/1443)
 
