@@ -3,7 +3,7 @@
 
 Name:		ImageMagick
 Version:	%{VER}.%{Patchlevel}
-Release:	0.beta.2%{?dist}
+Release:	0.beta.2%{?dist}.1
 Summary:	An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:	ImageMagick
@@ -320,6 +320,9 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Wed Jun 03 2015 Jitka Plesnikova <jplesnik@redhat.com> - 6.9.1.3-0.beta.2.1
+- Perl 5.22 rebuild
+
 * Wed May 27 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.3-0.beta.2
 - Again readd --without-gcc-arch to configure, to gone also -mtune gcc option (https://fedorahosted.org/fesco/ticket/1443)
 
