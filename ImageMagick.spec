@@ -324,7 +324,7 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
-* Tue Jun 02 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.3-0.beta.3
+* Mon Jun 08 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.3-0.beta.3
 - Add --disable-silent-rules, --with-jbig (and BR jbigkit-devel), --with-openjp2 (and BR openjpeg2-devel >= 2.1.0) by mail request from Remi Collet.
 
 * Wed Jun 03 2015 Jitka Plesnikova <jplesnik@redhat.com> - 6.9.1.3-0.beta.2.1
