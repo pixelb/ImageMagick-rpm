@@ -2,15 +2,15 @@
 %global Patchlevel 3
 
 Name:		ImageMagick
-Version:	%{VER}.%{Patchlevel}
-Release:	0.beta.2%{?dist}.1
-Summary:	An X application for displaying and manipulating images
+Version:		%{VER}.%{Patchlevel}
+Release:		0.beta.3%{?dist}
+Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
-License:	ImageMagick
-Url:		http://www.imagemagick.org/
-Source0:	ftp://ftp.ImageMagick.org/pub/%{name}/beta/%{name}-%{VER}-%{Patchlevel}.tar.bz2
+License:		ImageMagick
+Url:			http://www.imagemagick.org/
+Source0:		ftp://ftp.ImageMagick.org/pub/%{name}/beta/%{name}-%{VER}-%{Patchlevel}.tar.bz2
 
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:		%{name}-libs = %{version}-%{release}
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
@@ -20,6 +20,8 @@ BuildRequires:	libwmf-devel, jasper-devel, libtool-ltdl-devel
 BuildRequires:	libX11-devel, libXext-devel, libXt-devel
 BuildRequires:	lcms2-devel, libxml2-devel, librsvg2-devel, OpenEXR-devel
 BuildRequires:	fftw-devel, OpenEXR-devel, libwebp-devel
+BuildRequires:	jbigkit-devel
+BuildRequires:	openjpeg2-devel >= 2.1.0
 
 %description
 ImageMagick is an image display and manipulation tool for the X
@@ -161,7 +163,9 @@ cp -p Magick++/demo/*.cpp Magick++/demo/*.miff Magick++/examples
 	--without-dps \
 	--without-included-ltdl --with-ltdl-include=%{_includedir} \
 	--without-gcc-arch \
-	--with-ltdl-lib=%{_libdir}
+	--with-ltdl-lib=%{_libdir} \
+	--with-jbig \
+	--with-openjp2
 
 # Disable rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -320,6 +324,9 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Tue Jun 02 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.3-0.beta.3
+- Add --disable-silent-rules, --with-jbig (and BR jbigkit-devel), --with-openjp2 (and BR openjpeg2-devel >= 2.1.0) by mail request from Remi Collet.
+
 * Wed Jun 03 2015 Jitka Plesnikova <jplesnik@redhat.com> - 6.9.1.3-0.beta.2.1
 - Perl 5.22 rebuild
 
