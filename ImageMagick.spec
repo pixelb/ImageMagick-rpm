@@ -3,7 +3,7 @@
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		0.beta.3%{?dist}.2
+Release:		0.beta.4%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -22,6 +22,8 @@ BuildRequires:	lcms2-devel, libxml2-devel, librsvg2-devel, OpenEXR-devel
 BuildRequires:	fftw-devel, OpenEXR-devel, libwebp-devel
 BuildRequires:	jbigkit-devel
 BuildRequires:	openjpeg2-devel >= 2.1.0
+
+Patch0:		fix-XPM.patch
 
 %description
 ImageMagick is an image display and manipulation tool for the X
@@ -134,6 +136,9 @@ however.
 
 %prep
 %setup -q -n %{name}-%{VER}-%{Patchlevel}
+
+%patch0 -p0 -b .xpm-fix
+
 sed -i 's/libltdl.la/libltdl.so/g' configure
 iconv -f ISO-8859-1 -t UTF-8 README.txt > README.txt.tmp
 touch -r README.txt README.txt.tmp
@@ -324,6 +329,9 @@ rm -rf %{buildroot}
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Sat Nov 21 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.3-0.beta.4
+- Add patch fix-XPM.patch (upstream fix for #1217178).
+
 * Tue Jun 16 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 6.9.1.3-0.beta.3.2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
