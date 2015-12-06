@@ -1,14 +1,14 @@
-%global VER 6.9.1
-%global Patchlevel 3
+%global VER 6.9.2
+%global Patchlevel 7
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		0.beta.4%{?dist}
+Release:		1%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
 Url:			http://www.imagemagick.org/
-Source0:		ftp://ftp.ImageMagick.org/pub/%{name}/beta/%{name}-%{VER}-%{Patchlevel}.tar.bz2
+Source0:		ftp://ftp.ImageMagick.org/pub/%{name}/%{name}-%{VER}-%{Patchlevel}.tar.xz
 
 Requires:		%{name}-libs = %{version}-%{release}
 
@@ -23,7 +23,7 @@ BuildRequires:	fftw-devel, OpenEXR-devel, libwebp-devel
 BuildRequires:	jbigkit-devel
 BuildRequires:	openjpeg2-devel >= 2.1.0
 
-Patch0:		fix-XPM.patch
+Patch0:		ImageMagick-6.9.2-7-multiarch-implicit-pkgconfig-dir.patch
 
 %description
 ImageMagick is an image display and manipulation tool for the X
@@ -137,16 +137,11 @@ however.
 %prep
 %setup -q -n %{name}-%{VER}-%{Patchlevel}
 
-%patch0 -p0 -b .xpm-fix
+%patch0 -p1 -b .multiarch-implicit-pkgconfig-dir
 
-sed -i 's/libltdl.la/libltdl.so/g' configure
-iconv -f ISO-8859-1 -t UTF-8 README.txt > README.txt.tmp
-touch -r README.txt README.txt.tmp
-mv README.txt.tmp README.txt
 # for %%doc
 mkdir Magick++/examples
 cp -p Magick++/demo/*.cpp Magick++/demo/*.miff Magick++/examples
-
 
 %build
 %configure \
@@ -159,29 +154,21 @@ cp -p Magick++/demo/*.cpp Magick++/demo/*.miff Magick++/examples
 	--with-magick_plus_plus \
 	--with-gslib \
 	--with-wmf \
-	--with-lcms2 \
 	--with-webp \
 	--with-openexr \
 	--with-rsvg \
 	--with-xml \
 	--with-perl-options="INSTALLDIRS=vendor %{?perl_prefix} CC='%__cc -L$PWD/magick/.libs' LDDLFLAGS='-shared -L$PWD/magick/.libs'" \
 	--without-dps \
-	--without-included-ltdl --with-ltdl-include=%{_includedir} \
 	--without-gcc-arch \
-	--with-ltdl-lib=%{_libdir} \
 	--with-jbig \
 	--with-openjp2
 
-# Disable rpath
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 # Do *NOT* use %%{?_smp_mflags}, this causes PerlMagick to be silently misbuild
 make
 
 
 %install
-rm -rf %{buildroot}
-
 make %{?_smp_mflags} install DESTDIR=%{buildroot} INSTALL="install -p"
 cp -a www/source %{buildroot}%{_datadir}/doc/%{name}-%{VER}
 # Delete *ONLY* _libdir/*.la files! .la files used internally to handle plugins - BUG#185237!!!
@@ -211,39 +198,38 @@ if [ -z perl-pkg-files ] ; then
 	exit -1
 fi
 
-# fix multilib issues
+# fix multilib issues: Rename provided file with platform-bits in name.
+# Create platform independant file inplace of provided and conditionally include required.
+# $1 - filename.h to process.
+function multilibFileVersions(){
+mv $1 ${1%%.h}-%{__isa_bits}.h
 
-mv %{buildroot}%{_includedir}/%{name}-6/magick/magick-config.h \
-	%{buildroot}%{_includedir}/%{name}-6/magick/magick-config-%{__isa_bits}.h
+local basename=$(basename $1)
 
-cat >%{buildroot}%{_includedir}/%{name}-6/magick/magick-config.h <<EOF
-#ifndef IMAGEMAGICK_MULTILIB
-#define IMAGEMAGICK_MULTILIB
-
+cat >$1 <<EOF
 #include <bits/wordsize.h>
 
 #if __WORDSIZE == 32
-# include "magick-config-32.h"
+# include "${basename%%.h}-32.h"
 #elif __WORDSIZE == 64
-# include "magick-config-64.h"
+# include "${basename%%.h}-64.h"
 #else
 # error "unexpected value for __WORDSIZE macro"
 #endif
-
-#endif
 EOF
+}
 
-# Fonts must be packaged separately. It does nothave matter and demos work without it.
+multilibFileVersions %{buildroot}%{_includedir}/%{name}-6/magick/magick-config.h
+multilibFileVersions %{buildroot}%{_includedir}/%{name}-6/magick/magick-baseconfig.h
+multilibFileVersions %{buildroot}%{_includedir}/%{name}-6/magick/version.h
+
+
+# Fonts must be packaged separately. It does not have matter and demos work without it.
 rm PerlMagick/demo/Generic.ttf
 
 %check
-#export LD_LIBRARY_PATH=%{buildroot}/wand/.libs/:%{buildroot}/Magick++/lib/.libs/
 export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}
 make %{?_smp_mflags} check
-
-%clean
-rm -rf %{buildroot}
-
 
 %post libs -p /sbin/ldconfig
 
@@ -261,7 +247,6 @@ rm -rf %{buildroot}
 %{_mandir}/man1/%{name}.*
 
 %files libs
-%defattr(-,root,root,-)
 %doc LICENSE NOTICE AUTHORS.txt QuickStart.txt
 %{_libdir}/libMagickCore-6.Q16.so.2*
 %{_libdir}/libMagickWand-6.Q16.so.2*
@@ -271,7 +256,6 @@ rm -rf %{buildroot}
 %{_sysconfdir}/%{name}-6
 
 %files devel
-%defattr(-,root,root,-)
 %{_bindir}/MagickCore-config
 %{_bindir}/Magick-config
 %{_bindir}/MagickWand-config
@@ -295,23 +279,19 @@ rm -rf %{buildroot}
 %{_mandir}/man1/MagickWand-config.*
 
 %files djvu
-%defattr(-,root,root,-)
 %{_libdir}/%{name}-%{VER}/modules-Q16/coders/djvu.*
 
 %files doc
-%defattr(-,root,root,-)
 %doc %{_datadir}/doc/%{name}-6
 %doc %{_datadir}/doc/%{name}-%{VER}
 %doc LICENSE
 
 %files c++
-%defattr(-,root,root,-)
 %doc Magick++/AUTHORS Magick++/ChangeLog Magick++/NEWS Magick++/README
 %doc www/Magick++/COPYING
 %{_libdir}/libMagick++-6.Q16.so.6*
 
 %files c++-devel
-%defattr(-,root,root,-)
 %doc Magick++/examples
 %{_bindir}/Magick++-config
 %{_includedir}/%{name}-6/Magick++
@@ -324,11 +304,20 @@ rm -rf %{buildroot}
 %{_mandir}/man1/Magick++-config.*
 
 %files perl -f perl-pkg-files
-%defattr(-,root,root,-)
 %{_mandir}/man3/*
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Fri Dec 04 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.2.7-1
+- Update to new upstream release 6.9.2-7 (bz#1224581)
+- Drop fix-XPM patch.
+- No so-name change, so will update in stable branch to fix also: bz#1267391
+    (JPEG 2000 support), bz#1269556 (security buff overflow in coders/icon.c),
+    bz#1269567 (Double free vulnerabilities in coders/{pict.c,tga.c})
+- Solving miltilib conflict - bz#1208347 - add patch ImageMagick-6.9.2-7-multiarch-implicit-pkgconfig-dir.patch.
+- Drop old options: --with-lcms2, --without-included-ltdl, --with-ltdl-include, --with-ltdl-lib
+- Some spec cleanup (including README utf recoding, rpath clean hacks).
+
 * Sat Nov 21 2015 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.1.3-0.beta.4
 - Add patch fix-XPM.patch (upstream fix for #1217178).
 
