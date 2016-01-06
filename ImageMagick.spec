@@ -1,9 +1,9 @@
-%global VER 6.9.2
-%global Patchlevel 7
+%global VER 6.9.3
+%global Patchlevel 0
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		2%{?dist}
+Release:		1%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -308,6 +308,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Wed Jan 06 2016 Pavel Alexeev <Pahan@Hubbitus.info> - 6.9.3.0-1
+- New upstream version 6.9.3-0. Bz#1293081.
+
 * Mon Dec 28 2015 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 6.9.2.7-2
 - Rebuilt for libwebp soname bump
 
