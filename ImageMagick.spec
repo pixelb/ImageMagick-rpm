@@ -15,6 +15,7 @@ Requires:		%{name}-libs = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
 BuildRequires:	libtiff-devel, giflib-devel, zlib-devel, perl-devel >= 5.8.1
+BuildRequires:	perl-generators
 BuildRequires:	ghostscript-devel, djvulibre-devel
 BuildRequires:	libwmf-devel, jasper-devel, libtool-ltdl-devel
 BuildRequires:	libX11-devel, libXext-devel, libXt-devel
