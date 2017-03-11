@@ -3,14 +3,14 @@
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		5%{?dist}
+Release:		6%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
 Url:			http://www.imagemagick.org/
 Source0:		ftp://ftp.ImageMagick.org/pub/%{name}/%{name}-%{VER}-%{Patchlevel}.tar.xz
 
-Requires:		%{name}-libs = %{version}-%{release}
+Requires:		%{name}-libs%{?_isa} = %{version}-%{release}
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
@@ -45,11 +45,11 @@ ImageMagick-devel as well.
 %package devel
 Summary:	Library links and header files for ImageMagick app development
 Group:	Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 Requires:	libX11-devel, libXext-devel, libXt-devel, ghostscript-devel
 Requires:	bzip2-devel, freetype-devel, libtiff-devel, libjpeg-devel, lcms2-devel
 Requires:	libwebp-devel, OpenEXR-devel, jasper-devel, pkgconfig
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
 
 %description devel
 ImageMagick-devel contains the library links and header files you'll
@@ -73,7 +73,7 @@ This packages contains a shared libraries to use within other applications.
 %package djvu
 Summary: DjVu plugin for ImageMagick
 Group: Applications/Multimedia
-Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description djvu
 This packages contains a plugin for ImageMagick which makes it possible to
@@ -94,7 +94,7 @@ http://www.imagemagick.org/
 %package perl
 Summary: ImageMagick perl bindings
 Group: System Environment/Libraries
-Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %description perl
@@ -107,7 +107,7 @@ ImageMagick.
 %package c++
 Summary: ImageMagick Magick++ library (C++ bindings)
 Group: System Environment/Libraries
-Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description c++
 This package contains the Magick++ library, a C++ binding to the ImageMagick
@@ -119,8 +119,8 @@ Install ImageMagick-c++ if you want to use any applications that use Magick++.
 %package c++-devel
 Summary: C++ bindings for the ImageMagick library
 Group: Development/Libraries
-Requires: %{name}-c++ = %{version}-%{release}
-Requires: %{name}-devel = %{version}-%{release}
+Requires: %{name}-c++%{?_isa} = %{version}-%{release}
+Requires: %{name}-devel%{?_isa} = %{version}-%{release}
 
 %description c++-devel
 ImageMagick-devel contains the static libraries and header files you'll
@@ -254,7 +254,8 @@ make %{?_smp_mflags} check
 %{_libdir}/%{name}-%{VER}
 %{_datadir}/%{name}-6
 %exclude %{_libdir}/%{name}-%{VER}/modules-Q16/coders/djvu.*
-%{_sysconfdir}/%{name}-6
+%dir %{_sysconfdir}/%{name}-6
+%config(noreplace) %{_sysconfdir}/%{name}-6/*.xml
 
 %files devel
 %{_bindir}/MagickCore-config
@@ -309,6 +310,10 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Sat Mar 11 2017 Remi Collet <remi@fedoraproject.org> - 6.9.3.0-6
+- flag configuration files #1374050
+- fix inter-package dependencies #1422773
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 6.9.3.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
@@ -408,7 +413,7 @@ make %{?_smp_mflags} check
 - rebuild (openexr)
 
 * Fri Nov 08 2013 Kyle McMartin <kyle@fedoraproject.org>
-- Use %__isa_bits instead of hardcoding the list of 64-bit architectures.
+- Use %%__isa_bits instead of hardcoding the list of 64-bit architectures.
 
 * Mon Oct 7 2013 Pavel Alexeev <Pahan@Hubbitus.info> - 6.8.7.0-1
 - Update to 6.8.7-0 to fix badurl (http://www.mail-archive.com/devel@lists.fedoraproject.org/msg67796.html)
