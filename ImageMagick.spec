@@ -3,7 +3,7 @@
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		6%{?dist}
+Release:		7%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -310,6 +310,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Sun Jun 04 2017 Jitka Plesnikova <jplesnik@redhat.com> - 6.9.3.0-7
+- Perl 5.26 rebuild
+
 * Sat Mar 11 2017 Remi Collet <remi@fedoraproject.org> - 6.9.3.0-6
 - flag configuration files #1374050
 - fix inter-package dependencies #1422773
