@@ -1,18 +1,17 @@
-%global VER 6.9.3
-%global Patchlevel 0
+%global VER 6.9.9
+%global Patchlevel 3
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		8%{?dist}
+Release:		1%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
 Url:			http://www.imagemagick.org/
-Source0:		ftp://ftp.ImageMagick.org/pub/%{name}/%{name}-%{VER}-%{Patchlevel}.tar.xz
+Source0:                https://www.imagemagick.org/download/%{name}-%{VER}-%{Patchlevel}.tar.xz
 
 Requires:		%{name}-libs%{?_isa} = %{version}-%{release}
 
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
 BuildRequires:	libtiff-devel, giflib-devel, zlib-devel, perl-devel >= 5.8.1
 BuildRequires:	perl-generators
@@ -24,7 +23,7 @@ BuildRequires:	fftw-devel, OpenEXR-devel, libwebp-devel
 BuildRequires:	jbigkit-devel
 BuildRequires:	openjpeg2-devel >= 2.1.0
 
-Patch0:		ImageMagick-6.9.2-7-multiarch-implicit-pkgconfig-dir.patch
+Patch0:		ImageMagick-6.9.9-3-multiarch-implicit-pkgconfig-dir.patch
 
 %description
 ImageMagick is an image display and manipulation tool for the X
@@ -175,9 +174,6 @@ cp -a www/source %{buildroot}%{_datadir}/doc/%{name}-%{VER}
 # Delete *ONLY* _libdir/*.la files! .la files used internally to handle plugins - BUG#185237!!!
 rm %{buildroot}%{_libdir}/*.la
 
-# fix weird perl Magick.so permissions
-chmod 755 %{buildroot}%{perl_vendorarch}/auto/Image/Magick/Magick.so
-
 # perlmagick: fix perl path of demo files
 %{__perl} -MExtUtils::MakeMaker -e 'MY->fixin(@ARGV)' PerlMagick/demo/*.pl
 
@@ -249,8 +245,8 @@ make %{?_smp_mflags} check
 
 %files libs
 %doc LICENSE NOTICE AUTHORS.txt QuickStart.txt
-%{_libdir}/libMagickCore-6.Q16.so.2*
-%{_libdir}/libMagickWand-6.Q16.so.2*
+%{_libdir}/libMagickCore-6.Q16.so.5*
+%{_libdir}/libMagickWand-6.Q16.so.5*
 %{_libdir}/%{name}-%{VER}
 %{_datadir}/%{name}-6
 %exclude %{_libdir}/%{name}-%{VER}/modules-Q16/coders/djvu.*
@@ -291,7 +287,7 @@ make %{?_smp_mflags} check
 %files c++
 %doc Magick++/AUTHORS Magick++/ChangeLog Magick++/NEWS Magick++/README
 %doc www/Magick++/COPYING
-%{_libdir}/libMagick++-6.Q16.so.6*
+%{_libdir}/libMagick++-6.Q16.so.8*
 
 %files c++-devel
 %doc Magick++/examples
@@ -310,6 +306,47 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Thu Jul 27 2017 Kevin Fenzi <kevin@scrye.com> - 6.9.9.3-1
+- Update to 6.9.9-3. Fixes bug #1299275
+- Fix CVE-2017-11644 ImageMagick: Memory-Leak in ReadMATImage() coders/mat.c - bug #1475485
+- Fix CVE-2017-11639 ImageMagick: heap-based buffer over-read in the WriteCIPImage() function in coders/cip.c - bug #1475470
+- Fix CVE-2017-11640 ImageMagick: NULL pointer dereference in WritePTIFImage() in coders/tiff.c - bug #1475463
+- Fix CVE-2017-11523 ImageMagick: Endless loop in ReadTXTImage function in coders/txt.c - bug #1474845
+- Fix CVE-2017-11446 CVE-2017-11478 ImageMagick: various flaws - bug #1474363,1474391
+- Fix CVE-2017-11360 ImageMagick: Resource exhaustion in ReadRLEImage function - bug #1473847
+- Fix CVE-2017-11188 ImageMagick: Resource exhaustion in ReadDPXImage function in coders\dpx.c - bug #1473824
+- Fix CVE-2017-11448 ImageMagick: Info leak from from uninitialized memory in ReadJPEGImage function - bug #1473801
+- Fix CVE-2017-11447 ImageMagick: Memory leak in ReadSCREENSHOTImage function in coders/screenshot.c - bug #1473798
+- Fix CVE-2017-11449 ImageMagick: coders/mpc.c don't validade blob sizes of stdin image input - bug #1473796
+- Fix CVE-2017-11450 ImageMagick: Too short JPEG data causes denial of service in coders/jpeg.c - bug #1473774
+- Fix CVE-2017-11141 ImageMagick: Memory exhaustion in ReadMATImage function in coders\mat.c - bug #1473757
+- Fix CVE-2017-10928 ImageMagick: heap-based buffer over-read in the GetNextToken function - bug #1473717
+- Fix CVE-2017-11352 ImageMagick: Improper EOF handling in coders/rle.c can trigger crash (Incomplete fix for CVE-2017-9144) - bug #1471835
+- Fix CVE-2017-10995 ImageMagick: Out-of-bounds heap read in mng_get_long function - bug #1471121
+- Fix CVE-2017-11170 ImageMagick: Memory leak in ReadTGAImage function when processing TGA or VST file - bug #1470669
+- Fix CVE-2017-7941 CVE-2017-7942 CVE-2017-7943 CVE-2017-8352 ImageMagick: various flaws - bug #1445676,1445677,1445679,1449253
+- Fix CVE-2017-9141 CVE-2017-9142 CVE-2017-9143 CVE-2017-9144 ImageMagick: various flaws - bug #1455578,1455581,1455583,1455584
+- Fix CVE-2016-9559 ImageMagick: Null pointer dereference in tiff.c - bug #1398189,1398198,1413898
+- Fix CVE-2017-5507 ImageMagick: Memory leak in mpc file handling - bug #1414444
+- Fix CVE-2016-10146 ImageMagick: Memory leak in caption and label handling - bug #1414446
+- Fix CVE-2017-5508 ImageMagick: Heap-buffer-overflow in PushQuantumPixel - bug #1414445
+- Fix CVE-2016-10070 ImageMagick: Out-of-bounds read in mat.c - bug #1410510
+- Fix CVE-2017-5506 ImageMagick: Double-free memory corruption in profile.c - bug #1414442
+- Fix CVE-2016-10064 ImageMagick: Buffer overflow in tiff.c - bug #1410478
+- Fix CVE-2016-10071 ImageMagick: Out-of-bounds read in mat.c - bug #1410513
+- Fix CVE-2016-10059 ImageMagick: TIFF file buffer overflow - bug #1410469
+- Fix CVE-2016-10057 ImageMagick: Buffer overflow in CALS coder - bug #1410466
+- Fix CVE-2016-10052 ImageMagick: Out-of-bounds write in exif (jpeg) reader - bug #1410459
+- Fix CVE-2016-10050 ImageMagick: Heap overflow when reading corrupt RLE files - bug #1410454
+- Fix CVE-2016-10049 ImageMagick: Buffer overflow when reading corrupt RLE files - bug #1410452
+- Fix CVE-2016-10046 ImageMagick: Buffer overflow in draw.c - bug #1410448
+- Fix CVE-2016-8677 ImageMagick: Memory allocation failure in AcquireQuantumPixel - bug #1385698
+- Fix CVE-2016-7906 ImageMagick: Mogrify heap-use-after-free in attribute.c - bug #1381141
+- Fix CVE-2016-7799 ImageMagick: Mogrify buffer over-read in profile.c - bug #1381138
+- ImageMagick: Hang when supplying file ending with colon to identify - bug #1380428
+- Fix CVE-2014-9907 CVE-2015-8957 CVE-2015-8958 CVE-2015-8959 CVE-2016-6823 CVE-2016-7101 CVE-2016-7513 CVE-2016-7514 CVE-2016-7515 CVE-2016-7516 CVE-2016-7517 CVE-2016-7518 CVE-2016-7519 CVE-2016-7520 CVE-2016-7521 ... ImageMagick: various flaws - bug #1378734,1378735,1378736,1378738,1378733,1378739,1378741,1378743,1378744,1378745,1378746,1378747,1378748,1378751,1378754,1378756,1378757,1378758,1378759,1378760,1378761,1378762,1378763,1378764,1378765,1378767,1378768,1378772,1378773,1378775,1378776,1378777,1378790
+- Fix CVE-2016-5010 ImageMagick: Out-of-bounds read when processing crafted tiff file  - bug #1354500,1361578
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 6.9.3.0-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
