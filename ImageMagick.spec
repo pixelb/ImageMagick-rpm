@@ -306,7 +306,7 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
-* Sun Jul 30 2017 Florian Weimer <fweimer@redhat.com> - 6.9.9.%{Patchlevel}-2
+* Sun Jul 30 2017 Florian Weimer <fweimer@redhat.com> - 6.9.9.3-2
 - Rebuild with binutils fix for ppc64le (#1475636)
 
 * Thu Jul 27 2017 Kevin Fenzi <kevin@scrye.com> - 6.9.9.3-1
