@@ -3,7 +3,7 @@
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		1%{?dist}
+Release:		2%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -306,6 +306,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Sun Jul 30 2017 Florian Weimer <fweimer@redhat.com> - 6.9.9.%{Patchlevel}-2
+- Rebuild with binutils fix for ppc64le (#1475636)
+
 * Thu Jul 27 2017 Kevin Fenzi <kevin@scrye.com> - 6.9.9.3-1
 - Update to 6.9.9-3. Fixes bug #1299275
 - Fix CVE-2017-11644 ImageMagick: Memory-Leak in ReadMATImage() coders/mat.c - bug #1475485
