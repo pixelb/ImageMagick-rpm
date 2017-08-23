@@ -23,7 +23,7 @@ BuildRequires:  fftw-devel, OpenEXR-devel, libwebp-devel
 BuildRequires:  jbigkit-devel
 BuildRequires:  openjpeg2-devel >= 2.1.0
 
-Patch0:		ImageMagick-6.9.9-3-multiarch-implicit-pkgconfig-dir.patch
+#Patch0:		ImageMagick-6.9.9-3-multiarch-implicit-pkgconfig-dir.patch
 
 %description
 ImageMagick is an image display and manipulation tool for the X
@@ -137,7 +137,7 @@ however.
 %prep
 %setup -q -n %{name}-%{VERSION}-%{Patchlevel}
 
-%patch0 -p1 -b .multiarch-implicit-pkgconfig-dir
+#%patch0 -p1 -b .multiarch-implicit-pkgconfig-dir
 
 # for %%doc
 mkdir Magick++/examples
