@@ -1,11 +1,6 @@
 %global VERSION  7.0.6
 %global Patchlevel  9
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1484578 & https://bugzilla.redhat.com/show_bug.cgi?id=1484579
-ExcludeArch: s390x ppc64
-
-
-
 Name:           ImageMagick
 Version:        %{VERSION}
 Release:        %{Patchlevel}.2%{?dist}
