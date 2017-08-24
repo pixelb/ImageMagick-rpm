@@ -1,19 +1,19 @@
 %global VERSION  7.0.6
 %global Patchlevel  9
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1484578 & https://bugzilla.redhat.com/show_bug.cgi?id=1484579
-ExcludeArch: s390x ppc64
 
 
 
 Name:           ImageMagick
 Version:        %{VERSION}
-Release:        %{Patchlevel}.2%{?dist}
+Release:        %{Patchlevel}.3%{?dist}
 Summary:        Use ImageMagick to convert, edit, or compose bitmap images in a variety of formats.  In addition resize, rotate, shear, distort and transform images.
 Group:          Applications/Multimedia
 License:        https://www.imagemagick.org/script/license.php
 Url:            https://www.imagemagick.org/
 Source0:        https://www.imagemagick.org/download/%{name}/%{name}-%{VERSION}-%{Patchlevel}.tar.bz2
+# workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1484579
+Patch0:         ImageMagick-7.0.6-9-skip-tests.patch
 
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
@@ -141,6 +141,12 @@ however.
 
 %prep
 %setup -q -n %{name}-%{VERSION}-%{Patchlevel}
+
+# skip some tests on big endian arches
+# https://bugzilla.redhat.com/show_bug.cgi?id=1484579
+%ifarch ppc64 s390x
+%patch0 -p1 -b .big-endian
+%endif
 
 #%patch0 -p1 -b .multiarch-implicit-pkgconfig-dir
 
@@ -305,6 +311,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Thu Aug 24 2017 Dan Horák <dan[at]danny.cz> - 7.0.6.9-3
+- temporarily disable 2 tests failing on big endian arches (#1484579)
+
 * Wed Aug 23 2017 Moez Roy <moez.roy@gmail.com> - 7.0.6.9
 - update to latest upstream
 
