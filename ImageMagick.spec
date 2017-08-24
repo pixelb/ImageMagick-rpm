@@ -2,8 +2,8 @@
 %global Patchlevel  9
 
 Name:           ImageMagick
-Version:        %{VERSION}.%{Patchlevel}
-Release:        2%{?dist}
+Version:        %{VERSION}
+Release:        %{Patchlevel}
 Summary:        Use ImageMagick to convert, edit, or compose bitmap images in a variety of formats.  In addition resize, rotate, shear, distort and transform images.
 Group:          Applications/Multimedia
 License:        https://www.imagemagick.org/script/license.php
