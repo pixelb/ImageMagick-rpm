@@ -1,27 +1,27 @@
-%global VERSION  7.0.6
-%global Patchlevel  9
+%global VER 6.9.9
+%global Patchlevel 3
 
-Name:           ImageMagick
-Version:        %{VERSION}
-Release:        %{Patchlevel}
-Summary:        Use ImageMagick to convert, edit, or compose bitmap images in a variety of formats.  In addition resize, rotate, shear, distort and transform images.
-Group:          Applications/Multimedia
-License:        https://www.imagemagick.org/script/license.php
-Url:            https://www.imagemagick.org/
-Source0:        https://www.imagemagick.org/download/%{name}/%{name}-%{VERSION}-%{Patchlevel}.tar.bz2
+Name:		ImageMagick
+Version:		%{VER}.%{Patchlevel}
+Release:		3%{?dist}
+Summary:		An X application for displaying and manipulating images
+Group:		Applications/Multimedia
+License:		ImageMagick
+Url:			http://www.imagemagick.org/
+Source0:                https://www.imagemagick.org/download/%{name}-%{VER}-%{Patchlevel}.tar.xz
 
-Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:		%{name}-libs%{?_isa} = %{version}-%{release}
 
-BuildRequires:  bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
-BuildRequires:  libtiff-devel, giflib-devel, zlib-devel, perl-devel >= 5.8.1
-BuildRequires:  perl-generators
-BuildRequires:  ghostscript-devel, djvulibre-devel
-BuildRequires:  libwmf-devel
-BuildRequires:  libX11-devel, libXext-devel, libXt-devel
-BuildRequires:  lcms2-devel, libxml2-devel, librsvg2-devel, OpenEXR-devel
-BuildRequires:  fftw-devel, OpenEXR-devel, libwebp-devel
-BuildRequires:  jbigkit-devel
-BuildRequires:  openjpeg2-devel >= 2.1.0
+BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
+BuildRequires:	libtiff-devel, giflib-devel, zlib-devel, perl-devel >= 5.8.1
+BuildRequires:	perl-generators
+BuildRequires:	ghostscript-devel, djvulibre-devel
+BuildRequires:	libwmf-devel, jasper-devel, libtool-ltdl-devel
+BuildRequires:	libX11-devel, libXext-devel, libXt-devel
+BuildRequires:	lcms2-devel, libxml2-devel, librsvg2-devel, OpenEXR-devel
+BuildRequires:	fftw-devel, OpenEXR-devel, libwebp-devel
+BuildRequires:	jbigkit-devel
+BuildRequires:	openjpeg2-devel >= 2.1.0
 
 Patch0:		ImageMagick-6.9.9-3-multiarch-implicit-pkgconfig-dir.patch
 
@@ -42,13 +42,13 @@ ImageMagick-devel as well.
 
 
 %package devel
-Summary: Library links and header files for ImageMagick application development
-Group: Development/Libraries
-Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: libX11-devel, libXext-devel, libXt-devel, ghostscript-devel
-Requires: bzip2-devel, freetype-devel, libtiff-devel, libjpeg-devel, lcms2-devel
-Requires: libwebp-devel, OpenEXR-devel, openjpeg2-devel, pkgconfig
-Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Summary:	Library links and header files for ImageMagick app development
+Group:	Development/Libraries
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	libX11-devel, libXext-devel, libXt-devel, ghostscript-devel
+Requires:	bzip2-devel, freetype-devel, libtiff-devel, libjpeg-devel, lcms2-devel
+Requires:	libwebp-devel, OpenEXR-devel, jasper-devel, pkgconfig
+Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
 
 %description devel
 ImageMagick-devel contains the library links and header files you'll
@@ -135,7 +135,7 @@ however.
 
 
 %prep
-%setup -q -n %{name}-%{VERSION}-%{Patchlevel}
+%setup -q -n %{name}-%{VER}-%{Patchlevel}
 
 %patch0 -p1 -b .multiarch-implicit-pkgconfig-dir
 
@@ -144,24 +144,25 @@ mkdir Magick++/examples
 cp -p Magick++/demo/*.cpp Magick++/demo/*.miff Magick++/examples
 
 %build
-%configure --enable-shared \
-        --disable-static \
-        --with-modules \
-        --with-perl \
-        --with-x \
-        --with-threads \
-        --with-magick_plus_plus \
-        --with-gslib \
-        --with-wmf \
-        --with-webp \
-        --with-openexr \
-        --with-rsvg \
-        --with-xml \
-        --with-perl-options="INSTALLDIRS=vendor %{?perl_prefix} CC='%__cc -L$PWD/MagickCore/.libs' LDDLFLAGS='-shared -L$PWD/MagickCore/.libs'" \
-        --without-dps  \
-        --without-gcc-arch \
-        --with-jbig \
-        --with-openjp2
+%configure \
+	--enable-shared \
+	--disable-static \
+	--with-modules \
+	--with-perl \
+	--with-x \
+	--with-threads \
+	--with-magick_plus_plus \
+	--with-gslib \
+	--with-wmf \
+	--with-webp \
+	--with-openexr \
+	--with-rsvg \
+	--with-xml \
+	--with-perl-options="INSTALLDIRS=vendor %{?perl_prefix} CC='%__cc -L$PWD/magick/.libs' LDDLFLAGS='-shared -L$PWD/magick/.libs'" \
+	--without-dps \
+	--without-gcc-arch \
+	--with-jbig \
+	--with-openjp2
 
 # Do *NOT* use %%{?_smp_mflags}, this causes PerlMagick to be silently misbuild
 make
@@ -169,12 +170,9 @@ make
 
 %install
 make %{?_smp_mflags} install DESTDIR=%{buildroot} INSTALL="install -p"
-cp -a www/source %{buildroot}%{_datadir}/doc/%{name}-%{VERSION}
+cp -a www/source %{buildroot}%{_datadir}/doc/%{name}-%{VER}
 # Delete *ONLY* _libdir/*.la files! .la files used internally to handle plugins - BUG#185237!!!
 rm %{buildroot}%{_libdir}/*.la
-
-# fix weird perl Magick.so permissions
-chmod 755 %{buildroot}%{perl_vendorarch}/auto/Image/Magick/*/*.so
 
 # perlmagick: fix perl path of demo files
 %{__perl} -MExtUtils::MakeMaker -e 'MY->fixin(@ARGV)' PerlMagick/demo/*.pl
@@ -187,14 +185,14 @@ find %{buildroot} -name "perllocal.pod" |xargs rm -f
 # perlmagick: build files list
 echo "%defattr(-,root,root,-)" > perl-pkg-files
 find %{buildroot}/%{_libdir}/perl* -type f -print \
-        | sed "s@^%{buildroot}@@g" > perl-pkg-files 
+	| sed "s@^%{buildroot}@@g" > perl-pkg-files
 find %{buildroot}%{perl_vendorarch} -type d -print \
-        | sed "s@^%{buildroot}@%dir @g" \
-        | grep -v '^%dir %{perl_vendorarch}$' \
-        | grep -v '/auto$' >> perl-pkg-files 
+	| sed "s@^%{buildroot}@%dir @g" \
+	| grep -v '^%dir %{perl_vendorarch}$' \
+	| grep -v '/auto$' >> perl-pkg-files
 if [ -z perl-pkg-files ] ; then
-    echo "ERROR: EMPTY FILE LIST"
-    exit -1
+	echo "ERROR: EMPTY FILE LIST"
+	exit -1
 fi
 
 # fix multilib issues: Rename provided file with platform-bits in name.
@@ -218,9 +216,9 @@ cat >$1 <<EOF
 EOF
 }
 
-multilibFileVersions %{buildroot}%{_includedir}/%{name}-7/MagickCore/magick-config.h
-multilibFileVersions %{buildroot}%{_includedir}/%{name}-7/MagickCore/magick-baseconfig.h
-multilibFileVersions %{buildroot}%{_includedir}/%{name}-7/MagickCore/version.h
+multilibFileVersions %{buildroot}%{_includedir}/%{name}-6/magick/magick-config.h
+multilibFileVersions %{buildroot}%{_includedir}/%{name}-6/magick/magick-baseconfig.h
+multilibFileVersions %{buildroot}%{_includedir}/%{name}-6/magick/version.h
 
 
 # Fonts must be packaged separately. It does not have matter and demos work without it.
@@ -247,52 +245,60 @@ make %{?_smp_mflags} check
 
 %files libs
 %doc LICENSE NOTICE AUTHORS.txt QuickStart.txt
-%{_libdir}/libMagickCore-7.Q16HDRI.so.*
-%{_libdir}/libMagickWand-7.Q16HDRI.so.*
-%{_libdir}/%{name}-%{VERSION}
-%{_datadir}/%{name}-7
-%exclude %{_libdir}/%{name}-%{VERSION}/modules-Q16HDRI/coders/djvu.*
-%dir %{_sysconfdir}/%{name}-7
-%config(noreplace) %{_sysconfdir}/%{name}-7/*.xml
+%{_libdir}/libMagickCore-6.Q16.so.5*
+%{_libdir}/libMagickWand-6.Q16.so.5*
+%{_libdir}/%{name}-%{VER}
+%{_datadir}/%{name}-6
+%exclude %{_libdir}/%{name}-%{VER}/modules-Q16/coders/djvu.*
+%dir %{_sysconfdir}/%{name}-6
+%config(noreplace) %{_sysconfdir}/%{name}-6/*.xml
 
 %files devel
 %{_bindir}/MagickCore-config
+%{_bindir}/Magick-config
 %{_bindir}/MagickWand-config
-%{_libdir}/libMagickCore-7.Q16HDRI.so
-%{_libdir}/libMagickWand-7.Q16HDRI.so
+%{_bindir}/Wand-config
+%{_libdir}/libMagickCore-6.Q16.so
+%{_libdir}/libMagickWand-6.Q16.so
 %{_libdir}/pkgconfig/MagickCore.pc
-%{_libdir}/pkgconfig/MagickCore-7.Q16HDRI.pc
+%{_libdir}/pkgconfig/MagickCore-6.Q16.pc
 %{_libdir}/pkgconfig/ImageMagick.pc
-%{_libdir}/pkgconfig/ImageMagick-7.Q16HDRI.pc
+%{_libdir}/pkgconfig/ImageMagick-6.Q16.pc
 %{_libdir}/pkgconfig/MagickWand.pc
-%{_libdir}/pkgconfig/MagickWand-7.Q16HDRI.pc
-%dir %{_includedir}/%{name}-7
-%{_includedir}/%{name}-7/MagickCore
-%{_includedir}/%{name}-7/MagickWand
+%{_libdir}/pkgconfig/MagickWand-6.Q16.pc
+%{_libdir}/pkgconfig/Wand.pc
+%{_libdir}/pkgconfig/Wand-6.Q16.pc
+%dir %{_includedir}/%{name}-6
+%{_includedir}/%{name}-6/magick
+%{_includedir}/%{name}-6/wand
+%{_mandir}/man1/Magick-config.*
 %{_mandir}/man1/MagickCore-config.*
+%{_mandir}/man1/Wand-config.*
 %{_mandir}/man1/MagickWand-config.*
 
 %files djvu
-%{_libdir}/%{name}-%{VERSION}/modules-Q16HDRI/coders/djvu.*
+%{_libdir}/%{name}-%{VER}/modules-Q16/coders/djvu.*
 
 %files doc
-%doc %{_datadir}/doc/%{name}-7
-%doc %{_datadir}/doc/%{name}-%{VERSION}
+%doc %{_datadir}/doc/%{name}-6
+%doc %{_datadir}/doc/%{name}-%{VER}
 %doc LICENSE
 
 %files c++
 %doc Magick++/AUTHORS Magick++/ChangeLog Magick++/NEWS Magick++/README
 %doc www/Magick++/COPYING
-%{_libdir}/libMagick++-7.Q16HDRI.so.*
+%{_libdir}/libMagick++-6.Q16.so.8*
 
 %files c++-devel
 %doc Magick++/examples
 %{_bindir}/Magick++-config
-%{_includedir}/%{name}-7/Magick++
-%{_includedir}/%{name}-7/Magick++.h
-%{_libdir}/libMagick++-7.Q16HDRI.so
+%{_includedir}/%{name}-6/Magick++
+%{_includedir}/%{name}-6/Magick++.h
+%{_libdir}/libMagick++-6.Q16.so
 %{_libdir}/pkgconfig/Magick++.pc
-%{_libdir}/pkgconfig/Magick++-7.Q16HDRI.pc
+%{_libdir}/pkgconfig/Magick++-6.Q16.pc
+%{_libdir}/pkgconfig/ImageMagick++.pc
+%{_libdir}/pkgconfig/ImageMagick++-6.Q16.pc
 %{_mandir}/man1/Magick++-config.*
 
 %files perl -f perl-pkg-files
@@ -300,9 +306,6 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
-* Wed Aug 23 2017 Moez Roy <moez.roy@gmail.com> - 7.0.6.9
-- update to latest upstream
-
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 6.9.9.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
