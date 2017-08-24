@@ -1,14 +1,14 @@
 %global VER 6.9.9
-%global Patchlevel 3
+%global Patchlevel 9
 
 Name:		ImageMagick
 Version:		%{VER}.%{Patchlevel}
-Release:		3%{?dist}
+Release:		1%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
 Url:			http://www.imagemagick.org/
-Source0:                https://www.imagemagick.org/download/%{name}-%{VER}-%{Patchlevel}.tar.xz
+Source0:		https://www.imagemagick.org/download/%{name}-%{VER}-%{Patchlevel}.tar.xz
 
 Requires:		%{name}-libs%{?_isa} = %{version}-%{release}
 
@@ -306,6 +306,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Thu Aug 24 2017 Michael Cronenworth <mike@cchtml.com> - 6.9.9.9-1
+- Update to 6.9.9-9
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 6.9.9.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
