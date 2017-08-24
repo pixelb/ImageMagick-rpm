@@ -1,17 +1,14 @@
-%global VERSION  7.0.6
+%global VER  7.0.6
 %global Patchlevel  9
 
-
-
-
 Name:           ImageMagick
-Version:        %{VERSION}
-Release:        %{Patchlevel}.3%{?dist}
+Version:        %{VER}.%{Patchlevel}
+Release:        4%{?dist}
 Summary:        Use ImageMagick to convert, edit, or compose bitmap images in a variety of formats.  In addition resize, rotate, shear, distort and transform images.
 Group:          Applications/Multimedia
 License:        https://www.imagemagick.org/script/license.php
 Url:            https://www.imagemagick.org/
-Source0:        https://www.imagemagick.org/download/%{name}/%{name}-%{VERSION}-%{Patchlevel}.tar.bz2
+Source0:        https://www.imagemagick.org/download/%{name}/%{name}-%{VER}-%{Patchlevel}.tar.bz2
 # workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1484579
 Patch0:         ImageMagick-7.0.6-9-skip-tests.patch
 
@@ -27,8 +24,6 @@ BuildRequires:  lcms2-devel, libxml2-devel, librsvg2-devel, OpenEXR-devel
 BuildRequires:  fftw-devel, OpenEXR-devel, libwebp-devel
 BuildRequires:  jbigkit-devel
 BuildRequires:  openjpeg2-devel >= 2.1.0
-
-#Patch0:		ImageMagick-6.9.9-3-multiarch-implicit-pkgconfig-dir.patch
 
 %description
 ImageMagick is an image display and manipulation tool for the X
@@ -140,15 +135,13 @@ however.
 
 
 %prep
-%setup -q -n %{name}-%{VERSION}-%{Patchlevel}
+%setup -q -n %{name}-%{VER}-%{Patchlevel}
 
 # skip some tests on big endian arches
 # https://bugzilla.redhat.com/show_bug.cgi?id=1484579
 %ifarch ppc64 s390x
 %patch0 -p1 -b .big-endian
 %endif
-
-#%patch0 -p1 -b .multiarch-implicit-pkgconfig-dir
 
 # for %%doc
 mkdir Magick++/examples
@@ -180,7 +173,7 @@ make
 
 %install
 make %{?_smp_mflags} install DESTDIR=%{buildroot} INSTALL="install -p"
-cp -a www/source %{buildroot}%{_datadir}/doc/%{name}-%{VERSION}
+cp -a www/source %{buildroot}%{_datadir}/doc/%{name}-%{VER}
 # Delete *ONLY* _libdir/*.la files! .la files used internally to handle plugins - BUG#185237!!!
 rm %{buildroot}%{_libdir}/*.la
 
@@ -260,9 +253,9 @@ make %{?_smp_mflags} check
 %doc LICENSE NOTICE AUTHORS.txt QuickStart.txt
 %{_libdir}/libMagickCore-7.Q16HDRI.so.*
 %{_libdir}/libMagickWand-7.Q16HDRI.so.*
-%{_libdir}/%{name}-%{VERSION}
+%{_libdir}/%{name}-%{VER}
 %{_datadir}/%{name}-7
-%exclude %{_libdir}/%{name}-%{VERSION}/modules-Q16HDRI/coders/djvu.*
+%exclude %{_libdir}/%{name}-%{VER}/modules-Q16HDRI/coders/djvu.*
 %dir %{_sysconfdir}/%{name}-7
 %config(noreplace) %{_sysconfdir}/%{name}-7/*.xml
 
@@ -284,11 +277,11 @@ make %{?_smp_mflags} check
 %{_mandir}/man1/MagickWand-config.*
 
 %files djvu
-%{_libdir}/%{name}-%{VERSION}/modules-Q16HDRI/coders/djvu.*
+%{_libdir}/%{name}-%{VER}/modules-Q16HDRI/coders/djvu.*
 
 %files doc
 %doc %{_datadir}/doc/%{name}-7
-%doc %{_datadir}/doc/%{name}-%{VERSION}
+%doc %{_datadir}/doc/%{name}-%{VER}
 %doc LICENSE
 
 %files c++
@@ -311,10 +304,13 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
-* Thu Aug 24 2017 Dan Horák <dan[at]danny.cz> - 7.0.6.9-3
+* Thu Aug 24 2017 Adam Williamson <awilliam@redhat.com> - 7.0.6.9-4
+- Correct versioning (patchlevel is *upstream*, not downstream)
+
+* Thu Aug 24 2017 Dan Horák <dan[at]danny.cz> - 7.0.6-9.3
 - temporarily disable 2 tests failing on big endian arches (#1484579)
 
-* Wed Aug 23 2017 Moez Roy <moez.roy@gmail.com> - 7.0.6.9
+* Wed Aug 23 2017 Moez Roy <moez.roy@gmail.com> - 7.0.6-9.2
 - update to latest upstream
 
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 6.9.9.3-3
