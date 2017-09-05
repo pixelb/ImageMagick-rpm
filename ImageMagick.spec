@@ -2,8 +2,11 @@
 %global Patchlevel 9
 
 Name:		ImageMagick
+# ImageMagick 7 was briefly sent to Fedora 27 and Rawhide in 2017;
+# the epoch was necessary to downgrade them back to 6.
+Epoch:			1
 Version:		%{VER}.%{Patchlevel}
-Release:		1%{?dist}
+Release:		2%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -306,6 +309,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Tue Sep 05 2017 Adam Williamson <awilliam@redhat.com> - 1:6.9.9.9-2
+- Bump epoch to 1 (for F27 and Rawhide reversion from 7.0.6)
+
 * Thu Aug 24 2017 Michael Cronenworth <mike@cchtml.com> - 6.9.9.9-1
 - Update to 6.9.9-9 (for F27 and Rawhide, revert to 6.9.9-9)
 
