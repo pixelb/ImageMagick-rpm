@@ -2,9 +2,11 @@
 %global Patchlevel 9
 
 Name:		ImageMagick
+%if 0%{?fedora} >= 27
 # ImageMagick 7 was briefly sent to Fedora 27 and Rawhide in 2017;
 # the epoch was necessary to downgrade them back to 6.
 Epoch:			1
+%endif
 Version:		%{VER}.%{Patchlevel}
 Release:		2%{?dist}
 Summary:		An X application for displaying and manipulating images
@@ -13,7 +15,7 @@ License:		ImageMagick
 Url:			http://www.imagemagick.org/
 Source0:		https://www.imagemagick.org/download/%{name}-%{VER}-%{Patchlevel}.tar.xz
 
-Requires:		%{name}-libs%{?_isa} = %{version}-%{release}
+Requires:		%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
 BuildRequires:	libtiff-devel, giflib-devel, zlib-devel, perl-devel >= 5.8.1
@@ -47,11 +49,11 @@ ImageMagick-devel as well.
 %package devel
 Summary:	Library links and header files for ImageMagick app development
 Group:	Development/Libraries
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:	libX11-devel, libXext-devel, libXt-devel, ghostscript-devel
 Requires:	bzip2-devel, freetype-devel, libtiff-devel, libjpeg-devel, lcms2-devel
 Requires:	libwebp-devel, OpenEXR-devel, jasper-devel, pkgconfig
-Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description devel
 ImageMagick-devel contains the library links and header files you'll
@@ -75,7 +77,7 @@ This packages contains a shared libraries to use within other applications.
 %package djvu
 Summary: DjVu plugin for ImageMagick
 Group: Applications/Multimedia
-Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description djvu
 This packages contains a plugin for ImageMagick which makes it possible to
@@ -96,7 +98,7 @@ http://www.imagemagick.org/
 %package perl
 Summary: ImageMagick perl bindings
 Group: System Environment/Libraries
-Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %description perl
@@ -109,7 +111,7 @@ ImageMagick.
 %package c++
 Summary: ImageMagick Magick++ library (C++ bindings)
 Group: System Environment/Libraries
-Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description c++
 This package contains the Magick++ library, a C++ binding to the ImageMagick
@@ -121,8 +123,8 @@ Install ImageMagick-c++ if you want to use any applications that use Magick++.
 %package c++-devel
 Summary: C++ bindings for the ImageMagick library
 Group: Development/Libraries
-Requires: %{name}-c++%{?_isa} = %{version}-%{release}
-Requires: %{name}-devel%{?_isa} = %{version}-%{release}
+Requires: %{name}-c++%{?_isa} = %{epoch}:%{version}-%{release}
+Requires: %{name}-devel%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description c++-devel
 ImageMagick-devel contains the static libraries and header files you'll
@@ -309,6 +311,10 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Wed Sep  6 2017 Remi Collet <remi@fedoraproject.org> -  1:6.9.9.9-3
+- fix inter-package dependency using epoch
+- only bump epoch in F27+
+
 * Tue Sep 05 2017 Adam Williamson <awilliam@redhat.com> - 1:6.9.9.9-2
 - Bump epoch to 1 (for F27 and Rawhide reversion from 7.0.6)
 
