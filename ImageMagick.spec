@@ -8,7 +8,7 @@ Name:		ImageMagick
 Epoch:			1
 %endif
 Version:		%{VER}.%{Patchlevel}
-Release:		2%{?dist}
+Release:		3%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
