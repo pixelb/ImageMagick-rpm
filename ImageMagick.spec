@@ -6,6 +6,8 @@ Name:		ImageMagick
 # ImageMagick 7 was briefly sent to Fedora 27 and Rawhide in 2017;
 # the epoch was necessary to downgrade them back to 6.
 Epoch:			1
+%else
+Epoch:			0
 %endif
 Version:		%{VER}.%{Patchlevel}
 Release:		3%{?dist}
