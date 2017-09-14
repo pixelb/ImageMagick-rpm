@@ -1,5 +1,5 @@
 %global VER 6.9.9
-%global Patchlevel 9
+%global Patchlevel 13
 
 Name:		ImageMagick
 %if 0%{?fedora} >= 27
@@ -10,7 +10,7 @@ Epoch:			1
 Epoch:			0
 %endif
 Version:		%{VER}.%{Patchlevel}
-Release:		3%{?dist}
+Release:		1%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -313,6 +313,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Thu Sep 14 2017 Peter Walter <pwalter@fedoraproject.org> - 1:6.9.9.13-1
+- Update to 6.9.9-13
+
 * Wed Sep  6 2017 Remi Collet <remi@fedoraproject.org> -  1:6.9.9.9-3
 - fix inter-package dependency using epoch
 - only bump epoch in F27+
