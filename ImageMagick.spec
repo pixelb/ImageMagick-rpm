@@ -1,5 +1,5 @@
 %global VER 6.9.9
-%global Patchlevel 13
+%global Patchlevel 15
 
 Name:		ImageMagick
 %if 0%{?fedora} >= 27
@@ -29,8 +29,11 @@ BuildRequires:	lcms2-devel, libxml2-devel, librsvg2-devel, OpenEXR-devel
 BuildRequires:	fftw-devel, OpenEXR-devel, libwebp-devel
 BuildRequires:	jbigkit-devel
 BuildRequires:	openjpeg2-devel >= 2.1.0
+BuildRequires:	autoconf automake
 
 Patch0:		ImageMagick-6.9.9-3-multiarch-implicit-pkgconfig-dir.patch
+#https://github.com/ImageMagick/ImageMagick/issues/781
+Patch1:		ImageMagick-6.9.9-15-urw-fonts.patch
 
 %description
 ImageMagick is an image display and manipulation tool for the X
@@ -145,12 +148,14 @@ however.
 %setup -q -n %{name}-%{VER}-%{Patchlevel}
 
 %patch0 -p1 -b .multiarch-implicit-pkgconfig-dir
+%patch1 -p1 -b .urw-fonts
 
 # for %%doc
 mkdir Magick++/examples
 cp -p Magick++/demo/*.cpp Magick++/demo/*.miff Magick++/examples
 
 %build
+autoconf -f -i
 %configure \
 	--enable-shared \
 	--disable-static \
@@ -313,6 +318,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Tue Sep 26 2017 Michael Cronenworth <mike@cchtml.com> - 1:6.9.9.15-1
+- Update to 6.9.9-15
+
 * Thu Sep 14 2017 Peter Walter <pwalter@fedoraproject.org> - 1:6.9.9.13-1
 - Update to 6.9.9-13
 
