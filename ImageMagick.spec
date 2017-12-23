@@ -1,5 +1,5 @@
 %global VER 6.9.9
-%global Patchlevel 22
+%global Patchlevel 27
 
 Name:		ImageMagick
 %if 0%{?fedora} >= 27
@@ -315,6 +315,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Sat Dec 23 2017 Michael Cronenworth <mike@cchtml.com> - 1:6.9.9.27-1
+- Update to 6.9.9-27
+
 * Tue Nov 07 2017 Michael Cronenworth <mike@cchtml.com> - 1:6.9.9.22-1
 - Update to 6.9.9-22
 
