@@ -1,5 +1,5 @@
 %global VER 6.9.9
-%global Patchlevel 27
+%global Patchlevel 33
 
 Name:		ImageMagick
 %if 0%{?fedora} >= 27
@@ -22,7 +22,7 @@ Requires:		%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
 BuildRequires:	libtiff-devel, giflib-devel, zlib-devel, perl-devel >= 5.8.1
 BuildRequires:	perl-generators
-BuildRequires:	ghostscript-devel, djvulibre-devel
+BuildRequires:	libgs-devel, djvulibre-devel
 BuildRequires:	libwmf-devel, jasper-devel, libtool-ltdl-devel
 BuildRequires:	libX11-devel, libXext-devel, libXt-devel
 BuildRequires:	lcms2-devel, libxml2-devel, librsvg2-devel, OpenEXR-devel
@@ -53,7 +53,7 @@ ImageMagick-devel as well.
 Summary:	Library links and header files for ImageMagick app development
 Group:	Development/Libraries
 Requires:	%{name}%{?_isa} = %{epoch}:%{version}-%{release}
-Requires:	libX11-devel, libXext-devel, libXt-devel, ghostscript-devel
+Requires:	libX11-devel, libXext-devel, libXt-devel, libgs-devel
 Requires:	bzip2-devel, freetype-devel, libtiff-devel, libjpeg-devel, lcms2-devel
 Requires:	libwebp-devel, OpenEXR-devel, jasper-devel, pkgconfig
 Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
@@ -315,6 +315,10 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Mon Jan 15 2018 Michael Cronenworth <mike@cchtml.com> - 1:6.9.9.33-1
+- Update to 6.9.9-33
+- Update ghostscript package name dependencies (RHBZ#1534655)
+
 * Sat Dec 23 2017 Michael Cronenworth <mike@cchtml.com> - 1:6.9.9.27-1
 - Update to 6.9.9-27
 
