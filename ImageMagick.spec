@@ -22,7 +22,12 @@ Requires:		%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
 BuildRequires:	libtiff-devel, giflib-devel, zlib-devel, perl-devel >= 5.8.1
 BuildRequires:	perl-generators
-BuildRequires:	libgs-devel, ghostscript-x11, djvulibre-devel
+%if 0%{?fedora} > 27
+BuildRequires:	libgs-devel, ghostscript-x11
+%else
+BuildRequires:	ghostscript-devel
+%endif
+BuildRequires:	djvulibre-devel
 BuildRequires:	libwmf-devel, jasper-devel, libtool-ltdl-devel
 BuildRequires:	libX11-devel, libXext-devel, libXt-devel
 BuildRequires:	lcms2-devel, libxml2-devel, librsvg2-devel, OpenEXR-devel
@@ -54,7 +59,12 @@ ImageMagick-devel as well.
 Summary:	Library links and header files for ImageMagick app development
 Group:	Development/Libraries
 Requires:	%{name}%{?_isa} = %{epoch}:%{version}-%{release}
-Requires:	libX11-devel, libXext-devel, libXt-devel, libgs-devel
+%if 0%{?fedora} > 27
+Requires:	libgs-devel
+%else
+Requires:	ghostscript-devel
+%endif
+Requires:	libX11-devel, libXext-devel, libXt-devel
 Requires:	bzip2-devel, freetype-devel, libtiff-devel, libjpeg-devel, lcms2-devel
 Requires:	libwebp-devel, OpenEXR-devel, jasper-devel, pkgconfig
 Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
