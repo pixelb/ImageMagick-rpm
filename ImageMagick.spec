@@ -10,7 +10,7 @@ Epoch:			1
 Epoch:			0
 %endif
 Version:		%{VER}.%{Patchlevel}
-Release:		1%{?dist}
+Release:		2%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -320,6 +320,9 @@ make %{?_smp_mflags} check
 %changelog
 * Mon Mar 12 2018 Michael Cronenworth <mike@cchtml.com> - 1:6.9.9.38-1
 - Update to 6.9.9-38
+
+* Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1:6.9.9.33-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
 * Mon Jan 15 2018 Michael Cronenworth <mike@cchtml.com> - 1:6.9.9.33-1
 - Update to 6.9.9-33
