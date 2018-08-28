@@ -1,5 +1,5 @@
-%global VER 6.9.9
-%global Patchlevel 38
+%global VER 6.9.10
+%global Patchlevel 10
 
 Name:		ImageMagick
 %if 0%{?fedora} >= 27
@@ -10,7 +10,7 @@ Epoch:			1
 Epoch:			0
 %endif
 Version:		%{VER}.%{Patchlevel}
-Release:		3%{?dist}
+Release:		1%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -204,6 +204,9 @@ find %{buildroot} -name "*.bs" |xargs rm -f
 find %{buildroot} -name ".packlist" |xargs rm -f
 find %{buildroot} -name "perllocal.pod" |xargs rm -f
 
+# remove libtool files
+find %{buildroot} -name "*.la" |xargs rm -f
+
 # perlmagick: build files list
 echo "%defattr(-,root,root,-)" > perl-pkg-files
 find %{buildroot}/%{_libdir}/perl* -type f -print \
@@ -267,8 +270,8 @@ make %{?_smp_mflags} check
 
 %files libs
 %doc LICENSE NOTICE AUTHORS.txt QuickStart.txt
-%{_libdir}/libMagickCore-6.Q16.so.5*
-%{_libdir}/libMagickWand-6.Q16.so.5*
+%{_libdir}/libMagickCore-6.Q16.so.6*
+%{_libdir}/libMagickWand-6.Q16.so.6*
 %{_libdir}/%{name}-%{VER}
 %{_datadir}/%{name}-6
 %exclude %{_libdir}/%{name}-%{VER}/modules-Q16/coders/djvu.*
@@ -328,6 +331,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Tue Aug 28 2018 Michael Cronenworth <mike@cchtml.com> - 1:6.9.10.10-1
+- Update to 6.9.10-10
+
 * Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1:6.9.9.38-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
