@@ -10,7 +10,7 @@ Epoch:			1
 Epoch:			0
 %endif
 Version:		%{VER}.%{Patchlevel}
-Release:		1%{?dist}
+Release:		2%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -204,8 +204,8 @@ find %{buildroot} -name "*.bs" |xargs rm -f
 find %{buildroot} -name ".packlist" |xargs rm -f
 find %{buildroot} -name "perllocal.pod" |xargs rm -f
 
-# remove libtool files
-find %{buildroot} -name "*.la" |xargs rm -f
+# Do NOT remove .la files for codecs
+# https://bugzilla.novell.com/show_bug.cgi?id=579798
 
 # perlmagick: build files list
 echo "%defattr(-,root,root,-)" > perl-pkg-files
@@ -331,6 +331,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Tue Aug 28 2018 Michael Cronenworth <mike@cchtml.com> - 1:6.9.10.10-2
+- Always ship .la files for codecs
+
 * Tue Aug 28 2018 Michael Cronenworth <mike@cchtml.com> - 1:6.9.10.10-1
 - Update to 6.9.10-10
 
