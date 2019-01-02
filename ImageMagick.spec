@@ -1,5 +1,5 @@
 %global VER 6.9.10
-%global Patchlevel 10
+%global Patchlevel 23
 
 Name:		ImageMagick
 %if 0%{?fedora} >= 27
@@ -10,7 +10,7 @@ Epoch:			1
 Epoch:			0
 %endif
 Version:		%{VER}.%{Patchlevel}
-Release:		2%{?dist}
+Release:		1%{?dist}
 Summary:		An X application for displaying and manipulating images
 Group:		Applications/Multimedia
 License:		ImageMagick
@@ -331,6 +331,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Wed Jan 02 2019 Michael Cronenworth <mike@cchtml.com> - 1:6.9.10.23-1
+- Update to 6.9.10-23
+
 * Tue Aug 28 2018 Michael Cronenworth <mike@cchtml.com> - 1:6.9.10.10-2
 - Always ship .la files for codecs
 
