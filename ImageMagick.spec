@@ -253,14 +253,8 @@ rm PerlMagick/demo/Generic.ttf
 export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}
 make %{?_smp_mflags} check
 
-%post libs -p /sbin/ldconfig
-
-%post c++ -p /sbin/ldconfig
-
-%postun libs -p /sbin/ldconfig
-
-%postun c++ -p /sbin/ldconfig
-
+%ldconfig_scriptlets libs
+%ldconfig_scriptlets c++
 
 %files
 %doc README.txt LICENSE NOTICE AUTHORS.txt NEWS.txt ChangeLog Platforms.txt
