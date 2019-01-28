@@ -12,7 +12,6 @@ Epoch:			0
 Version:		%{VER}.%{Patchlevel}
 Release:		1%{?dist}
 Summary:		An X application for displaying and manipulating images
-Group:		Applications/Multimedia
 License:		ImageMagick
 Url:			http://www.imagemagick.org/
 Source0:		https://www.imagemagick.org/download/%{name}-%{VER}-%{Patchlevel}.tar.xz
@@ -57,7 +56,6 @@ ImageMagick-devel as well.
 
 %package devel
 Summary:	Library links and header files for ImageMagick app development
-Group:	Development/Libraries
 Requires:	%{name}%{?_isa} = %{epoch}:%{version}-%{release}
 %if 0%{?fedora} > 27
 Requires:	libgs-devel
@@ -82,7 +80,6 @@ however.
 
 %package libs
 Summary: ImageMagick libraries to link with
-Group: Applications/Multimedia
 
 %description libs
 This packages contains a shared libraries to use within other applications.
@@ -90,7 +87,6 @@ This packages contains a shared libraries to use within other applications.
 
 %package djvu
 Summary: DjVu plugin for ImageMagick
-Group: Applications/Multimedia
 Requires: %{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description djvu
@@ -100,7 +96,6 @@ save and load DjvU files from ImageMagick and libMagickCore using applications.
 
 %package doc
 Summary: ImageMagick html documentation
-Group: Documentation
 
 %description doc
 ImageMagick documentation, this package contains usage (for the
@@ -111,7 +106,6 @@ http://www.imagemagick.org/
 
 %package perl
 Summary: ImageMagick perl bindings
-Group: System Environment/Libraries
 Requires: %{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
@@ -124,7 +118,6 @@ ImageMagick.
 
 %package c++
 Summary: ImageMagick Magick++ library (C++ bindings)
-Group: System Environment/Libraries
 Requires: %{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description c++
@@ -136,7 +129,6 @@ Install ImageMagick-c++ if you want to use any applications that use Magick++.
 
 %package c++-devel
 Summary: C++ bindings for the ImageMagick library
-Group: Development/Libraries
 Requires: %{name}-c++%{?_isa} = %{epoch}:%{version}-%{release}
 Requires: %{name}-devel%{?_isa} = %{epoch}:%{version}-%{release}
 
