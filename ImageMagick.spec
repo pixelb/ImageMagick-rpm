@@ -10,7 +10,7 @@ Epoch:			1
 Epoch:			0
 %endif
 Version:		%{VER}.%{Patchlevel}
-Release:		3%{?dist}
+Release:		4%{?dist}
 Summary:		An X application for displaying and manipulating images
 License:		ImageMagick
 Url:			http://www.imagemagick.org/
@@ -317,6 +317,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Fri Feb 01 2019 Caolán McNamara <caolanm@redhat.com> - 1:6.9.10.23-4
+- Rebuilt for fixed libwmf soname
+
 * Thu Jan 31 2019 Kalev Lember <klember@redhat.com> - 1:6.9.10.23-3
 - Rebuilt for libwmf soname bump
 
