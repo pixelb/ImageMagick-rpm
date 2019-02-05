@@ -1,5 +1,5 @@
 %global VER 6.9.10
-%global Patchlevel 23
+%global Patchlevel 25
 
 Name:		ImageMagick
 %if 0%{?fedora} >= 27
@@ -10,7 +10,7 @@ Epoch:			1
 Epoch:			0
 %endif
 Version:		%{VER}.%{Patchlevel}
-Release:		4%{?dist}
+Release:		1%{?dist}
 Summary:		An X application for displaying and manipulating images
 License:		ImageMagick
 Url:			http://www.imagemagick.org/
@@ -317,6 +317,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Tue Feb 05 2019 Pete Walter <pwalter@fedoraproject.org> - 1:6.9.10.25-1
+- Update to 6.9.10-25
+
 * Fri Feb 01 2019 Caolán McNamara <caolanm@redhat.com> - 1:6.9.10.23-4
 - Rebuilt for fixed libwmf soname
 
