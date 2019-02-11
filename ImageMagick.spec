@@ -5,18 +5,19 @@ Name:		ImageMagick
 %if 0%{?fedora} >= 27
 # ImageMagick 7 was briefly sent to Fedora 27 and Rawhide in 2017;
 # the epoch was necessary to downgrade them back to 6.
-Epoch:			1
+Epoch:		1
 %else
-Epoch:			0
+Epoch:		0
 %endif
-Version:		%{VER}.%{Patchlevel}
-Release:		1%{?dist}
-Summary:		An X application for displaying and manipulating images
-License:		ImageMagick
-Url:			http://www.imagemagick.org/
-Source0:		https://www.imagemagick.org/download/%{name}-%{VER}-%{Patchlevel}.tar.xz
+Version:	%{VER}.%{Patchlevel}
+Release:	1%{?dist}
+Summary:	An X application for displaying and manipulating images
 
-Requires:		%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
+License:	ImageMagick
+Url:		http://www.imagemagick.org/
+Source0:	https://www.imagemagick.org/download/%{name}-%{VER}-%{Patchlevel}.tar.xz
+
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
 BuildRequires:	libtiff-devel, giflib-devel, zlib-devel, perl-devel >= 5.8.1
