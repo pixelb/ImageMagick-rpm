@@ -17,7 +17,7 @@ License:	ImageMagick
 Url:		http://www.imagemagick.org/
 Source0:	https://www.imagemagick.org/download/%{name}-%{VER}-%{Patchlevel}.tar.xz
 
-Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
+Patch0:		ImageMagick-6.9.9-3-multiarch-implicit-pkgconfig-dir.patch
 
 BuildRequires:	bzip2-devel, freetype-devel, libjpeg-devel, libpng-devel
 BuildRequires:	libtiff-devel, giflib-devel, zlib-devel, perl-devel >= 5.8.1
@@ -36,8 +36,7 @@ BuildRequires:	jbigkit-devel
 BuildRequires:	openjpeg2-devel >= 2.1.0
 BuildRequires:	autoconf automake gcc gcc-c++
 
-Patch0:		ImageMagick-6.9.9-3-multiarch-implicit-pkgconfig-dir.patch
-
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description
 ImageMagick is an image display and manipulation tool for the X
