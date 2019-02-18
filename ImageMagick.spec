@@ -1,5 +1,5 @@
 %global VER 6.9.10
-%global Patchlevel 27
+%global Patchlevel 28
 
 Name:		ImageMagick
 %if 0%{?fedora} >= 27
@@ -318,6 +318,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Mon Feb 18 2019 Pete Walter <pwalter@fedoraproject.org> - 1:6.9.10.28-1
+- Update to 6.9.10.28
+
 * Mon Feb 11 2019 Pete Walter <pwalter@fedoraproject.org> - 1:6.9.10.27-1
 - Update to 6.9.10-27
 
