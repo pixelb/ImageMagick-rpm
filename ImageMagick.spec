@@ -10,7 +10,7 @@ Epoch:		1
 Epoch:		0
 %endif
 Version:	%{VER}.%{Patchlevel}
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	An X application for displaying and manipulating images
 
 License:	ImageMagick
@@ -30,8 +30,8 @@ BuildRequires:	ghostscript-devel
 BuildRequires:	djvulibre-devel
 BuildRequires:	libwmf-devel, jasper-devel, libtool-ltdl-devel
 BuildRequires:	libX11-devel, libXext-devel, libXt-devel
-BuildRequires:	lcms2-devel, libxml2-devel, librsvg2-devel, OpenEXR-devel
-BuildRequires:	fftw-devel, OpenEXR-devel, libwebp-devel
+BuildRequires:	lcms2-devel, libxml2-devel, librsvg2-devel
+BuildRequires:	fftw-devel, ilmbase-devel, OpenEXR-devel, libwebp-devel
 BuildRequires:	jbigkit-devel
 BuildRequires:	openjpeg2-devel >= 2.1.0
 BuildRequires:	autoconf automake gcc gcc-c++
@@ -317,6 +317,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Thu Apr 11 2019 Richard Shaw <hobbes1069@gmail.com> - 1:6.9.10.28-2
+- Rebuild for OpenEXR/Ilmbase 2.3.0.
+
 * Mon Feb 18 2019 Pete Walter <pwalter@fedoraproject.org> - 1:6.9.10.28-1
 - Update to 6.9.10.28
 
