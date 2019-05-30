@@ -10,7 +10,7 @@ Epoch:		1
 Epoch:		0
 %endif
 Version:	%{VER}.%{Patchlevel}
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	An X application for displaying and manipulating images
 
 License:	ImageMagick
@@ -317,6 +317,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Thu May 30 2019 Jitka Plesnikova <jplesnik@redhat.com> - 1:6.9.10.28-3
+- Perl 5.30 rebuild
+
 * Thu Apr 11 2019 Richard Shaw <hobbes1069@gmail.com> - 1:6.9.10.28-2
 - Rebuild for OpenEXR/Ilmbase 2.3.0.
 
