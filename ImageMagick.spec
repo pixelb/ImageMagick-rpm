@@ -10,7 +10,7 @@ Epoch:		1
 Epoch:		0
 %endif
 Version:	%{VER}.%{Patchlevel}
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	An X application for displaying and manipulating images
 
 License:	ImageMagick
@@ -158,6 +158,10 @@ cp -p Magick++/demo/*.cpp Magick++/demo/*.miff Magick++/examples
 
 %build
 autoconf -f -i
+
+# Reduce thread contention
+export CFLAGS="%{optflags} -DIMPNG_SETJMP_IS_THREAD_SAFE"
+
 %configure \
 	--enable-shared \
 	--disable-static \
@@ -317,6 +321,9 @@ make %{?_smp_mflags} check
 %doc PerlMagick/demo/ PerlMagick/Changelog PerlMagick/README.txt
 
 %changelog
+* Wed Jul 10 2019 Pádraig Brady <P@draigBrady.com> - 0:6.9.10.28-4
+- Improve thread contention with configuration appropriate for Linux
+
 * Thu May 30 2019 Jitka Plesnikova <jplesnik@redhat.com> - 1:6.9.10.28-3
 - Perl 5.30 rebuild
 
